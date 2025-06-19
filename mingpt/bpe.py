@@ -256,11 +256,13 @@ def get_encoder():
 
 class BPETokenizer:
     """ PyTorch-aware class that wraps the Encoder above """
-
     def __init__(self):
         self.encoder = get_encoder()
         self.eot_char = "<|endoftext|>" # NOTE: Encoding this is broken!
         self.eot_token = 50256
+        
+    def get_vocab_size(self,):
+        return self.eot_token+1
 
     def __call__(self, text, return_tensors='pt'):
         # PyTorch only; here because we want to match huggingface/transformers interface
